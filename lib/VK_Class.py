@@ -143,6 +143,34 @@ class VK:
                             random_id=randrange(10 ** 7)
                         )
 
+                        if finded_result['photos_id'] is False:
+                            self.api.messages.send(
+                                user_id=event.user_id,
+                                message=f'[id{finded_result["id"]}|{finded_result["first_name"]} {finded_result["last_name"]}] скрыл доступ к своим фотографиям',
+                                random_id=randrange(10 ** 7)
+                            )
+
+                        if len(finded_result['photos_id']) == 0:
+                            self.api.messages.send(
+                                user_id=event.user_id,
+                                message=f'У [id{finded_result["id"]}|{finded_result["first_name"]} {finded_result["last_name"]}] нет фотографий на странице',
+                                random_id=randrange(10 ** 7)
+                            )
+
+                        if len(finded_result['photos_id']) > 0:
+                            self.api.messages.send(
+                                user_id=event.user_id,
+                                message=f'фото:',
+                                random_id=randrange(10 ** 7)
+                            )
+
+                            for photo_id in finded_result['photos_id']:
+                                self.api.messages.send(
+                                    user_id=event.user_id,
+                                    attachment=f'photo{finded_result["id"]}_{photo_id}',
+                                    random_id=randrange(10 ** 7)
+                                )
+
 
                     else:
                         self.api.messages.send(
